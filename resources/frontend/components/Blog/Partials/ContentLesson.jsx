@@ -5,12 +5,14 @@ import { getData } from "../../../utils/api";
 import { useDispatch, useSelector } from 'react-redux';
 import PracticeArea from "./PracticeArea";
 
+
 export default function ContentLesson() {
   const { slug } = useParams()
   const [lesson, setLesson] = useState('')
   const [isShowPracticeArea, setIsShowPracticeArea] = useState(false)
   const { token } = useSelector((state) => state.auth);
   const [showModal, setShowModal] = useState(false)
+  
 
   useEffect(() => {
     (async () => {
@@ -26,6 +28,9 @@ export default function ContentLesson() {
   const closeModal = () => {
     setShowModal(false)
   }
+
+
+  
 
   return (
     <>

@@ -66,7 +66,6 @@
                     </td>
                     <td>{{ $user->getStatusName() }}</td>
                     <td>
-                      {{-- <button type="button" class="btn cur-p btn-primary btn-color">View</button> --}}
                       <a class="btn cur-p btn-info btn-color" href="{{ route('admin.user.edit', $user->id) }}">Edit</a>
                       @if($user->isActive())
                         <a class="btn cur-p btn-danger btn-color" href="{{ route('admin.user.block-user', $user->id) }}" onclick="confirm('Are you sure?')">Block user</button>

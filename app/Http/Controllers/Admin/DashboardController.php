@@ -29,6 +29,7 @@ class DashboardController
         return view('admin.dashboard.index', compact('totalUsers', 'totalCategories', 'totalLessons', 'totalStudents', 'totalSocialPosts'));
     }
 
+  
     /**
      * Show the form for creating a new resource.
      */

@@ -25,6 +25,8 @@
     <link rel="stylesheet" href="{{ asset('theme/css/bootstrap-icons.css') }}" type="text/css" media="all" />
     <!-- magnific popup css -->
     <link rel="stylesheet" href="{{ asset('theme/css/magnific-popup.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+  
 
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="{{ asset('theme/css/style.css') }}" type="text/css" media="all" />

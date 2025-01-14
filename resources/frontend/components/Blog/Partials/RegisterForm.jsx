@@ -31,7 +31,7 @@ export default function RegisterForm ({closeModal}) {
 
   useEffect(() => {
     if (token) {
-      navigate('/'); // Redirect to home page after login
+      navigate('/');
     }
   }, [token, navigate]);
 

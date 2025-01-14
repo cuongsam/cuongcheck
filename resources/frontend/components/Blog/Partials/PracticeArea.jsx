@@ -59,8 +59,8 @@ export default function PracticeArea ({closeModal, lesson}) {
         const context = canvas.getContext('2d');
         context.lineCap = 'round';
         context.lineJoin = 'round';
-        context.strokeStyle = penColor; // Color for drawing
-        context.lineWidth = penSize; // Set stroke width
+        context.strokeStyle = penColor; 
+        context.lineWidth = penSize; 
     }, [penColor, penSize]);
 
     useEffect(() => {
@@ -69,7 +69,7 @@ export default function PracticeArea ({closeModal, lesson}) {
 
         context.clearRect(0, 0, canvas.width, canvas.height);
         const backgroundImage = new Image();
-        backgroundImage.src = sampleImage; // Replace with your image URL
+        backgroundImage.src = sampleImage;
         backgroundImage.onload = () => {
             if (!updateHistory) {
                 context.globalAlpha = 0.3;
@@ -138,7 +138,7 @@ export default function PracticeArea ({closeModal, lesson}) {
 
             context.clearRect(0, 0, canvas.width, canvas.height);
             const backgroundImage = new Image();
-            backgroundImage.src = sampleImage; // Replace with your image URL
+            backgroundImage.src = sampleImage; 
             backgroundImage.onload = () => {
                 if (!updateHistory) {
                     context.globalAlpha = 0.3;
@@ -155,7 +155,7 @@ export default function PracticeArea ({closeModal, lesson}) {
         const canvas = canvasRef.current;
 
         canvas.toBlob(async (blob) => {
-          const formData = new FormData();
+        const formData = new FormData();
           formData.append('image', blob, 'canvas-image.png');
           formData.append('lesson_id', lesson.id);
           formData.append('share_after_save', shareAfterSave);
@@ -209,7 +209,7 @@ export default function PracticeArea ({closeModal, lesson}) {
             const res = await postData("user/save-practice", formData);
             if (res && res.success) {
                 alert(
-                    "The post has been sent to the admin for review, please wait!"
+                    "The Post Has Been Sent To The Admin For Review, Please Wait!"
                 );
                 setIsModalShareOpen(false);
                 setTriggerHistory(triggerHistory + 1);
@@ -316,12 +316,15 @@ export default function PracticeArea ({closeModal, lesson}) {
                     </div>
                 </div>
             </div>
-
-            {isModalShareOpen && (
+            
+           
+            
+                { isModalShareOpen && (
                 <div className="myModal">
                     <div className="initModal">
+                    <div className="container profile-page" id="pacticeAreaContainer">
+                    <button type="button" className="btn-close" onClick={closeModal}></button>
                         <h3>Posts are shared</h3>
-
                         {cavasSrc && (
                             <div>
                                 <img
@@ -386,7 +389,9 @@ export default function PracticeArea ({closeModal, lesson}) {
                         </div>
                     </div>
                 </div>
+                </div>
             )}
+        
         </>
     )
 }

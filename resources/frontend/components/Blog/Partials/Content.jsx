@@ -11,6 +11,8 @@ export default function Content() {
   const { language, category, level } = useParams();
   const [showModal, setShowModal] = useState(false)
   const [posts, setPosts] = useState([])
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredPosts, setFilteredPosts] = useState(posts);
 
 
   const openModal = () => {
@@ -47,16 +49,11 @@ export default function Content() {
 
   useEffect(() => {
     Pusher.logToConsole = true;
-    const pusher = new Pusher("43cd5ffabe75e89fc509", {
-        cluster: "ap1",
+    var pusher = new Pusher('bbad5a8e394db843afe9', {
+      cluster: 'ap1'
     });
     const channel = pusher.subscribe("my-channel");
-    channel.bind("pusher:subscription_succeeded", () => {
-        console.log("Successfully subscribed to channel: my-channel");
-    });
     channel.bind("my-confirmed", (data) => {
-        console.log("Received event:", data);
-
         if (data?.type === 3) {
             toastr.error(
                 `Post rejected: ${data.title}`,
@@ -89,11 +86,23 @@ export default function Content() {
     });
 
     return () => {
-        channel.unbind("pusher:subscription_succeeded");
         channel.unbind("my-confirmed");
         pusher.unsubscribe("my-channel");
     };
 }, []);
+
+
+useEffect(() => {
+  setFilteredPosts(posts);
+}, [posts]);
+
+const handleSearch = (e) => {
+  e.preventDefault();
+  const filtered = posts.filter((post) =>
+    post.title.toLowerCase().includes(searchTerm.toLowerCase())
+);
+setFilteredPosts(filtered);
+};
 
 
   return (
@@ -113,24 +122,24 @@ export default function Content() {
             </div>
           </div>
           <div className="row">
-
             <div className="col-lg-4">
               <div className="row">
                 <div className="col-lg-12">
                   <div className="widget-sidber">
                     <div className="widget_search">
-                      <form action="#" method="get">
+                    <form onSubmit={handleSearch}>
                         <input
-                          type="text"
-                          name="s"
-                          defaultValue=""
-                          placeholder="Search Here"
-                          title="Search for:"
+                            type="text"
+                            name="s"
+                            value={searchTerm}
+                            placeholder="Search Here"
+                            title="Search for:"
+                            onChange={(e) => setSearchTerm(e.target.value)}
                         />
                         <button type="submit" className="icons">
-                          <i className="fa fa-search" />
+                            <i className="fa fa-search" />
                         </button>
-                      </form>
+                    </form>
                     </div>
                   </div>
                   <div className="widget-sidber">
@@ -139,7 +148,6 @@ export default function Content() {
                     </div>
                     <div className="widget-category">
                       <ul>
-
                         {
                           categories && categories.map(cat => {
                             return (
@@ -169,112 +177,7 @@ export default function Content() {
                       </ul>
                     </div>
                   </div>
-                  {/* <div className="widget-sidber">
-                    <div className="widget-sidber-content">
-                      <h4>Latest Posts</h4>
-                    </div>
-                    <div className="sidber-widget-recent-post">
-                      <div className="recent-widget-thumb">
-                        <img src="/theme/images/inner/recent-post.png" alt="" />
-                      </div>
-                      <div className="recent-widget-content">
-                        <a href="blog-details.html">
-                          Top crypto exchange influencers
-                        </a>
-                        <p> feb, 26 2024</p>
-                      </div>
-                    </div>
-                    <div className="sidber-widget-recent-post">
-                      <div className="recent-widget-thumb">
-                        <img src="/theme/images/inner/recent-post2.png" alt="" />
-                      </div>
-                      <div className="recent-widget-content">
-                        <a href="blog-details.html">
-                          Necessity may give us best virtual court
-                        </a>
-                        <p> June, 15 2024</p>
-                      </div>
-                    </div>
-                    <div className="sidber-widget-recent-post">
-                      <div className="recent-widget-thumb">
-                        <img src="/theme/images/inner/recent-post3.png" alt="" />
-                      </div>
-                      <div className="recent-widget-content">
-                        <a href="blog-details.html">
-                          You should know about business plan
-                        </a>
-                        <p> april, 10 2024</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="widget-sidber">
-                    <div className="widget-sidber-content">
-                      <h4>Tags</h4>
-                    </div>
-                    <div className="widget-catefories-tags">
-                      <a href="#">Consulting</a>
-                      <a href="#">Agency</a>
-                      <a href="#">Business</a>
-                      <a href="#">Digital</a>
-                      <a href="#">Experience</a>
-                      <a href="#">Technology</a>
-                    </div>
-                  </div>
-                  <div className="sidebar__single sidebar__comments">
-                    <h3 className="sidebar__title">Recent Comments</h3>
-                    <ul className="sidebar__comments-list list-unstyled">
-                      <li>
-                        <div className="sidebar__comments-icon">
-                          {" "}
-                          <i className="fas fa-comments" />
-                        </div>
-                        <div className="sidebar__comments-text-box">
-                          <p>
-                            A wordpress commenter on <br />
-                            launch new mobile app{" "}
-                          </p>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="sidebar__comments-icon">
-                          {" "}
-                          <i className="fas fa-comments" />{" "}
-                        </div>
-                        <div className="sidebar__comments-text-box">
-                          <p>
-                            {" "}
-                            <span>John Doe</span> on template:
-                          </p>
-                          <h5>comments</h5>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="sidebar__comments-icon">
-                          {" "}
-                          <i className="fas fa-comments" />{" "}
-                        </div>
-                        <div className="sidebar__comments-text-box">
-                          <p>
-                            A wordpress commenter on <br />
-                            launch new mobile app{" "}
-                          </p>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="sidebar__comments-icon">
-                          {" "}
-                          <i className="fas fa-comments" />{" "}
-                        </div>
-                        <div className="sidebar__comments-text-box">
-                          <p>
-                            {" "}
-                            <span>John Doe</span> on template:
-                          </p>
-                          <h5>comments</h5>
-                        </div>
-                      </li>
-                    </ul>
-                  </div> */}
+                
                 </div>
               </div>
             </div>
@@ -282,13 +185,11 @@ export default function Content() {
             <div className="col-lg-8">
               <div className="row">
                 
-                {
-                  posts && posts.map((post, index) => {
-                    return (
-                      <div className="col-lg-6 col-md-6" key={index}>
-                        <div className="blog-singele-box">
-                          <div className="blog-thumb">
-                            
+                
+                 {filteredPosts && filteredPosts.map((post, index) => (
+                   <div className="col-lg-6 col-md-6" key={index}>
+                   <div className="blog-singele-box">
+                       <div className="blog-thumb">
                               {
                                 post.isLearnedLesson && (
                                   <div className="learnedTag learned">
@@ -296,7 +197,6 @@ export default function Content() {
                                   </div>
                                 )
                               }
-
                               {
                                 !post.isLearnedLesson && (
                                   <div className="learnedTag notlearnedyet">
@@ -304,7 +204,6 @@ export default function Content() {
                                   </div>
                                 )
                               }
-
                             <img src={ post.thumbnail } alt="blog" height={400} style={{'objectFit': 'cover'}} />
                             <div className="blog-content">
                               <h3 className="blog-title">
@@ -326,10 +225,9 @@ export default function Content() {
                         </div>
                       </div>
                     )
-                  })
-                }
-
+                  )}
               </div>
+
             </div>
 
           </div>

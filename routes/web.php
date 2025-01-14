@@ -26,6 +26,8 @@ Route::prefix('admin')->name('admin.')->middleware(AdminMiddleware::class)->grou
         return redirect()->route('admin.dashboard.index');
     });
 
+    
+
     Route::prefix('dashboard')->name('dashboard.')->controller(DashboardController::class)->group(function () {
         Route::get('index', 'index')->name('index');
     });
@@ -41,7 +43,6 @@ Route::prefix('admin')->name('admin.')->middleware(AdminMiddleware::class)->grou
         Route::post('store', 'store')->name('store');
         Route::get('edit/{id}', 'edit')->name('edit');
         Route::post('update/{id}', 'update')->name('update');
-        // Route::get('destroy/{id}', 'destroy')->name('destroy');
         Route::get('block-user/{id}', 'blockUser')->name('block-user');
         Route::get('unblock-user/{id}', 'unblockUser')->name('unblock-user');
     });
@@ -54,7 +55,6 @@ Route::prefix('admin')->name('admin.')->middleware(AdminMiddleware::class)->grou
         Route::post('update/{id}', 'update')->name('update');
         Route::get('hide-category/{id}', 'hideCategory')->name('hide-category');
         Route::get('show-category/{id}', 'showCategory')->name('show-category');
-        // Route::get('destroy/{id}', 'destroy')->name('destroy');
     });
 
     Route::prefix('lesson')->name('lesson.')->controller(LessonController::class)->group(function () {
@@ -72,7 +72,6 @@ Route::prefix('admin')->name('admin.')->middleware(AdminMiddleware::class)->grou
         Route::post('store', 'store')->name('store');
         Route::get('edit/{id}', 'edit')->name('edit');
         Route::post('update/{id}', 'update')->name('update');
-        // Route::get('destroy/{id}', 'destroy')->name('destroy');
     });
 
     Route::post('/upload-image', [ImageController::class, 'upload'])->name('image.upload');
@@ -106,6 +105,11 @@ Route::prefix('api')->group(function () {
         Route::post('/post-comment', [SocialPostController::class, 'addSocialPostComment'])->name('postComment');
     });
 });
+
+Route::get('/pusher',function (){
+    return view('pusher');
+});
+
 
 Route::get('/{any}', function(){
     return view('frontend.app');

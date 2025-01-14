@@ -1,6 +1,8 @@
 // import "@popperjs/core";
 import * as bootstrap from 'bootstrap';
 
+
+
 import '../styles/index.scss';
 import './fullcalendar';
 import './masonry';
@@ -18,5 +20,6 @@ import './email';
 import './googleMaps';
 import './utils';
 import './admin/post';
+// import './admin/notification';
 import './admin/common';
 import './admin/ckeditor-config';

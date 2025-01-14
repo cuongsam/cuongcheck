@@ -164,6 +164,7 @@ class UserController
         $user = User::findOrFail($id);
 
         if(($id == 1) || (Auth::user()->id != 1 && $user["type"] == 1)){
+            
             return redirect()->route('admin.user.index')->with('error','You have\'t permission to block this user ');
         }
 

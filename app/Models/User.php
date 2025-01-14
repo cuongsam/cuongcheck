@@ -15,7 +15,7 @@ class User extends Authenticatable
 
     const TYPE_ADMIN = 1;
     const TYPE_STUDENT = 2;
-
+    
     const STATUS_ACTIVE = 1;
     const STATUS_INACTIVE = 2;
 
